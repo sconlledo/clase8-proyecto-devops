@@ -22,6 +22,9 @@ app.post("/calcular", (req, res) => {
   return res.send({ resultado: "hola mundo" });
 });
 
-
+const ambiente = process.env.NODE_ENV || "Sin información"
+app.get("/ambiente", (req, res) => {
+  res.send(`El ambiente actual es: ${ambiente}`);
+});
 
 export default app;

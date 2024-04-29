@@ -1,0 +1,9 @@
+services:
+  clase8-proyecto-devops:
+    image: localhost:8082/clase8-proyecto-devops
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    
