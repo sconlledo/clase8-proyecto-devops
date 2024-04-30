@@ -26,7 +26,7 @@ pipeline {
                 }
             }
         }
-        stage('crear imagen docker') {
+        stage('Delivery de docker') {
             steps {
                 script {
                     docker.withRegistry('http://localhost:8082', 'nexus-key') {
@@ -34,6 +34,16 @@ pipeline {
                         sh "docker tag localhost:8082/clase8-proyecto-devops localhost:8082/clase8-proyecto-devops:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
                         sh 'docker push localhost:8082/clase8-proyecto-devops'
                         sh "docker push localhost:8082/clase8-proyecto-devops:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+                    }
+                }
+            }
+        }
+        stage('Deploy de compose') {
+            steps {
+                script {
+                    docker.withRegistry('http://localhost:8082', 'nexus-key') {
+                        sh 'docker-compose pull'
+                        sh "docker-compose up --force-recreate --build"
                     }
                 }
             }
